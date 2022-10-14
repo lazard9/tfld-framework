@@ -19,6 +19,23 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
          */
         protected function __construct()
         {
+            // load class.
+            $this->setup_hooks();
+        }
+
+        function setup_hooks()
+        {
+
+            // Professors CPT
+            add_filter('init', [$this, 'tfld_register_curriculum_taxonomy'], 0);
+            add_action('save_post', [$this, 'tfld_insert_curriculum_taxonomy_terms'], 100, 2);
+            // Courses CPT
+            add_filter('init', [$this, 'tfld_register_courses_taxonomies'], 0);
+            add_action('save_post', [$this, 'tfld_set_default_object_terms'], 100, 2);
+            add_action('init', [$this, 'tfld_cleanup_level_taxonomy_terms']);
+            add_action('init', [$this, 'tfld_insert_level_taxonomy_terms'], 999);
+            add_action('add_meta_boxes', [$this, 'tfld_level_meta_box']);
+            add_action('save_post', [$this, 'tfld_save_level_taxonomy']);
         }
 
         /**
@@ -59,9 +76,9 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
         }
 
         /*
-     * Populate terms for taxonomy Curriculums.
-     * 
-     */
+         * Populate terms for taxonomy Curriculums.
+         * 
+         */
         public function tfld_insert_curriculum_taxonomy_terms(): void
         {
 
@@ -92,34 +109,6 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
         {
 
             /**
-             * Level not hierarchical, only one can be selected,
-             * and has only 3 choices.
-             *
-             */
-            $labels = array(
-                'name' => 'Level',
-                'singular_name' => 'Level',
-                'search_items' => 'Search Levels',
-                'all_items' => 'All Levels',
-                'parent_item' => 'Parent Level',
-                'parent_item_colon' => 'Parent Field:',
-                'edit_item' => 'Edit Level',
-                'update_item' => 'Update Level',
-                'add_new_item' => 'Add New Level',
-                'new_item_name' => 'New Level Name',
-                'menu_name' => 'Level'
-            );
-
-            register_taxonomy('level', 'courses', array(
-                'labels' => $labels,
-                'show_in_quick_edit' => false,
-                'meta_box_cb' => false,
-                'hierarchical' => false,
-                'show_in_menu' => false,
-                'show_in_nav_menus' => false,
-            ));
-
-            /**
              * Hierarchical taxonomy ~ Categories
              *
              */
@@ -148,12 +137,38 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
                 'rewrite' => array('slug' => 'subject'),
             ));
 
+            /**
+             * Level not hierarchical, only one can be selected,
+             * and has only 3 choices.
+             *
+             */
+            $labels = array(
+                'name' => 'Level',
+                'singular_name' => 'Level',
+                'search_items' => 'Search Levels',
+                'all_items' => 'All Levels',
+                'parent_item' => 'Parent Level',
+                'parent_item_colon' => 'Parent Field:',
+                'edit_item' => 'Edit Level',
+                'update_item' => 'Update Level',
+                'add_new_item' => 'Add New Level',
+                'new_item_name' => 'New Level Name',
+                'menu_name' => 'Level'
+            );
+
+            register_taxonomy('level', 'courses', array(
+                'labels' => $labels,
+                'show_in_quick_edit' => false,
+                'meta_box_cb' => false,
+                'hierarchical' => false,
+                'show_in_menu' => false,
+                'show_in_nav_menus' => false,
+            ));
 
             /**
              * Nonhierarchical taxonomy
              *
              */
-
             $labels = array(
                 'name' => _x('Topics', 'taxonomy general name'),
                 'singular_name' => _x('Topic', 'taxonomy singular name'),
@@ -187,11 +202,11 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
 
 
         /*
-     * Set default cat for all CPT Courses taxonomies
-     * @source {https://circlecube.com/says/2013/01/set-default-terms-for-your-custom-taxonomy-default/}
-     * @source {http://wordpress.mfields.org/2010/set-default-terms-for-your-custom-taxonomies-in-wordpress-3-0/}
-     * @license   GPLv2
-     */
+         * Set default cat for all CPT Courses taxonomies
+         * @source {https://circlecube.com/says/2013/01/set-default-terms-for-your-custom-taxonomy-default/}
+         * @source {http://wordpress.mfields.org/2010/set-default-terms-for-your-custom-taxonomies-in-wordpress-3-0/}
+         * @license   GPLv2
+         */
         public function tfld_set_default_object_terms($post_id, $post): void
         {
             if ('draft' === $post->post_status && $post->post_type === 'courses') {
@@ -212,10 +227,10 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
         }
 
         /*
-     * Only in array (e.g. 'Any','Beginer','Medium','Advanced') 
-     * specified taxonomy terms are included.
-     * 
-     */
+         * Only in array (e.g. 'Any','Beginer','Medium','Advanced') 
+         * specified taxonomy terms are included.
+         * 
+         */
         public function tfld_cleanup_level_taxonomy_terms(): void
         {
 
@@ -244,9 +259,9 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
         }
 
         /*
-     * Populate terms for taxonomy Level. 
-     * 
-     */
+         * Populate terms for taxonomy Level. 
+         * 
+         */
         public function tfld_insert_level_taxonomy_terms(): void
         {
 
@@ -265,9 +280,9 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
         }
 
         /*
-     * Add metabox for taxonomy Level.
-     * 
-     */
+         * Add metabox for taxonomy Level.
+         * 
+         */
         public function tfld_level_meta_box(): void
         {
 
@@ -282,9 +297,9 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
         }
 
         /*
-     * Make options radio (can select only singe term) for taxonomy Level. 
-     * 
-     */
+         * Make options radio (can select only singe term) for taxonomy Level. 
+         * 
+         */
         public function tfld_level_meta_box_term($post): void
         {
 
@@ -295,7 +310,7 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
 
             // We assume that there is a single category
             $currentTaxonomyValue = get_the_terms($post->ID, 'level')[0];
-?>
+            ?>
             <p>Choose taxonomy value</p>
             <p>
                 <?php foreach ($terms as $term) : ?>
@@ -304,13 +319,13 @@ if (!class_exists('TFLD_Taxonomies', false)) : class TFLD_Taxonomies extends TFL
                     </input><br />
                 <?php endforeach; ?>
             </p>
-<?php
+            <?php
         }
 
         /*
-     * Save term for taxonomy Level. 
-     * 
-     */
+         * Save term for taxonomy Level. 
+         * 
+         */
         function tfld_save_level_taxonomy($post_id): void
         {
             if (isset($_REQUEST['level']))

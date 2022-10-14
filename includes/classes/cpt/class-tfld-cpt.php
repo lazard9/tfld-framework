@@ -16,13 +16,15 @@ if ( ! class_exists( 'TFLD_CPT', false ) ) : class TFLD_CPT extends TFLD_Singlet
      *
      */
     protected function __construct() {
+
+        // load class.
+		$this->setup_hooks();
     }
 
-    function tfld_register_cpt() {
+    function setup_hooks() {
 
-        $this->tfld_register_courses_cpt();
-        $this->tfld_register_professors_cpt();
-
+        add_filter('init', [$this, 'tfld_register_courses_cpt']);
+        add_filter('init', [$this, 'tfld_register_professors_cpt']);
     }
 
     function tfld_register_courses_cpt() : void {

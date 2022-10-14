@@ -20,6 +20,17 @@ if (!class_exists('TFLD_Shortcodes', false)) : class TFLD_Shortcodes extends TFL
          */
         protected function __construct()
         {
+            // load class.
+            $this->setup_hooks();
+        }
+
+        function setup_hooks()
+        {
+
+            // Usage echo do_shortcode('[swiper_slider_01]');
+            add_shortcode('swiper_slider_01', [$this, 'tfld_swiper_shortcode']);
+            // Usage echo do_shortcode('[ajax_load_more]');
+            add_shortcode('ajax_load_more', [$this, 'tfld_ajax_lm_shortcode']);
         }
 
         public function tfld_swiper_shortcode(): void

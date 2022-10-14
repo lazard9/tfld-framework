@@ -20,7 +20,16 @@ if (!class_exists('TFLD_Ajax_Load_More', false)) : class TFLD_Ajax_Load_More ext
 		 */
 		protected function __construct()
 		{
-		}
+            
+            // load class.
+            $this->setup_hooks();
+        }
+
+        function setup_hooks() {
+
+            add_action('wp_ajax_load_more', [$this, 'tfld_ajax_load_more_posts']);
+            add_action('wp_ajax_nopriv_load_more', [$this, 'tfld_ajax_load_more_posts']);
+        }
 
 		public function tfld_ajax_load_more_posts(): void
 		{

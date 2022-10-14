@@ -18,6 +18,16 @@ if (!class_exists('TFLD_Templates', false)) : class TFLD_Templates extends TFLD_
          */
         protected function __construct()
         {
+
+            // load class.
+		    $this->setup_hooks();
+        }
+
+        public function setup_hooks(): void
+        {
+
+            add_filter('single_template', [$this, 'tfld_template_course']);
+            add_filter('template_include', [$this, 'tfld_template_arcive_courses']);
         }
 
         /* 

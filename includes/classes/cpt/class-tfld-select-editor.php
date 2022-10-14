@@ -18,6 +18,15 @@ if ( ! class_exists( 'TFLD_Select_Editor', false ) ) : class TFLD_Select_Editor 
      *
      */
     protected function __construct() {
+        
+        // load class.
+		$this->setup_hooks();
+    }
+
+    function setup_hooks() {
+
+        add_filter('add_meta_boxes', [$this, 'tfld_select_editor_main']);
+        add_filter('save_post', [$this, 'tfld_save_editor']);
     }
 
     /*

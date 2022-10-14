@@ -17,6 +17,16 @@ if ( ! class_exists( 'TFLD_Courses_Details', false ) ) : class TFLD_Courses_Deta
      *
      */
     protected function __construct() {
+        
+        // load class.
+		$this->setup_hooks();
+    }
+
+    function setup_hooks() {
+
+        add_action('add_meta_boxes', [$this, 'tfld_courses_details_main']);
+        add_action('save_post', [$this, 'tfld_save_course_details']);
+        add_action('after_switch_theme', [$this, 'tfld_create_database_table']);
     }
 
     /*

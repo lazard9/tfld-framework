@@ -6,6 +6,7 @@
  * Note: Should be called with The Loop
  */
 
+// get_the_ID() works in the loop!
 if (empty(get_the_ID())) {
 	return null;
 }

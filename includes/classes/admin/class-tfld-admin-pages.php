@@ -9,8 +9,6 @@
 namespace TFLD\Includes\Admin;
 
 use TFLD\Includes\Abstracts\TFLD_Singleton;
-use TFLD\Includes\Admin\Settings\TFLD_Admin_Form;
-use TFLD\Includes\Admin\Settings\TFLD_Main_Form;
 
 if (!class_exists('TFLD_Admin_Pages', false)) : class TFLD_Admin_Pages extends TFLD_Singleton
     {
@@ -20,16 +18,16 @@ if (!class_exists('TFLD_Admin_Pages', false)) : class TFLD_Admin_Pages extends T
          */
         protected function __construct()
         {
+
+            // load class.
+		    $this->setup_hooks();
         }
 
-        public function admin_form_init(): object
+        public function setup_hooks(): void
         {
-            return new TFLD_Admin_Form;
-        }
-
-        public function main_form_init(): object
-        {
-            return new TFLD_Main_Form;
+            
+            add_action('admin_menu', [$this, 'tfld_simple_settings_page']);
+            add_action('admin_init', [$this, 'tfld_simple_description_options']);
         }
 
         /**

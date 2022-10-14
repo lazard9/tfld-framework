@@ -18,6 +18,15 @@ if (!class_exists('TFLD_Admin_Form', false)) : class TFLD_Admin_Form extends TFL
          */
         protected function __construct()
         {
+
+            // load class.
+		    $this->setup_hooks();
+        }
+
+        public function setup_hooks(): void
+        {
+            
+            add_action('admin_init', [$this, 'tfld_simple_admin_form_init']);
         }
 
         public function tfld_simple_admin_form_init(): void

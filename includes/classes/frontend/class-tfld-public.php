@@ -18,13 +18,15 @@ if (!class_exists('TFLD_Public', false)) : class TFLD_Public extends TFLD_Single
          */
         protected function __construct()
         {
+
+            // load class.
+		    $this->setup_hooks();
         }
 
-        public function init($theme_name, $theme_version): void
+        public function setup_hooks(): void
         {
 
-            $this->theme_name = $theme_name;
-            $this->theme_version = $theme_version;
+            add_action('wp_enqueue_scripts', [$this, 'tfld_enqueue_frontend_assets']);
         }
 
         /**
@@ -42,38 +44,38 @@ if (!class_exists('TFLD_Public', false)) : class TFLD_Public extends TFLD_Single
             if (!is_plugin_active('wp-swiper/wp-swiper.php')) {
 
                 wp_enqueue_style(
-                    $this->theme_name . '-swiper-bundle',
+                    "tfld-framework-swiper-bundle",
                     TFLD_FRAMEWORK_URL . '/assets/vendor/css/swiper-bundle.min.css',
                     [],
-                    $this->theme_version
+                    '1.0.0'
                 );
 
                 wp_enqueue_script(
-                    $this->theme_name . '-swiper-bundle',
+                    "tfld-framework-swiper-bundle",
                     TFLD_FRAMEWORK_URL . '/assets/vendor/js/swiper-bundle.min.js',
                     NULL,
-                    $this->theme_version,
+                    '1.0.0',
                     true
                 );
             }
 
             wp_enqueue_style(
-                $this->theme_name . '-frontend-style',
+                "tfld-framework-frontend-style",
                 TFLD_FRAMEWORK_URL . '/assets/build/css/frontend.css',
                 [],
-                $this->theme_version
+                '1.0.0'
             );
 
             wp_enqueue_script(
-                $this->theme_name . "-frontend-script",
+                "tfld-framework-frontend-script",
                 TFLD_FRAMEWORK_URL . '/assets/build/js/frontend.bundle.js',
                 ['jquery'],
-                $this->theme_version,
+                '1.0.0',
                 true
             );
 
             wp_localize_script(
-                $this->theme_name . "-frontend-script",
+                "tfld-framework-frontend-script",
                 'ajaxConfig',
                 [
                     'ajaxUrl' => admin_url('admin-ajax.php'),

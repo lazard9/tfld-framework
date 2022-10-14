@@ -25,13 +25,19 @@ if (!class_exists('TFLD_Admin', false)) : class TFLD_Admin extends TFLD_Singleto
             self::include_once( TFLD_FRAMEWORK_DIR . '/includes/classes/admin/class-tfld-admin-pages.php' );
             self::include_once( TFLD_FRAMEWORK_DIR . '/includes/classes/admin/settings/class-tfld-admin-form.php' );
             self::include_once( TFLD_FRAMEWORK_DIR . '/includes/classes/admin/settings/class-tfld-main-form.php' );
+
+            TFLD_Admin_Pages::get_instance();
+            Settings\TFLD_Admin_Form::get_instance();
+            Settings\TFLD_Main_Form::get_instance();
+
+            // load class.
+		    $this->setup_hooks();
         }
 
-        public function init($theme_name, $theme_version): void
+        public function setup_hooks(): void
         {
-
-            $this->theme_name = $theme_name;
-            $this->theme_version = $theme_version;
+            
+            add_action('admin_enqueue_scripts', [$this, 'tfld_enqueue_admin_assets']);
         }
 
         /**
@@ -42,17 +48,17 @@ if (!class_exists('TFLD_Admin', false)) : class TFLD_Admin extends TFLD_Singleto
         {
 
             wp_enqueue_style(
-                $this->theme_name . '-admin-style',
+                "tfld-framework-admin-style",
                 TFLD_FRAMEWORK_URL . '/assets/build/css/admin.css',
                 [],
-                $this->theme_version
+                '1.0.0'
             );
 
             wp_enqueue_script(
-                $this->theme_name . "-main",
+                "tfld-framework-main",
                 TFLD_FRAMEWORK_URL . '/assets/build/js/admin.bundle.js',
                 [],
-                $this->theme_version,
+                '1.0.0',
                 true
             );
         }
