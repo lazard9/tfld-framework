@@ -37,9 +37,6 @@ final class TFLD_Framework extends TFLD_Singleton
 {
     use Include_Files;
 
-    private $loader;
-
-
     /**
      * Protected class constructor to prevent direct object creation
      *
