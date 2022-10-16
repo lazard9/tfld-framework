@@ -54,7 +54,7 @@ include_once TFLD_FRAMEWORK_DIR . '/includes/traits/trait-include-files.php';
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-if (!class_exists('TFLD_Simple_Features', false)) {
+if (!class_exists('TFLD_Framework', false)) {
     include_once TFLD_FRAMEWORK_DIR . '/includes/classes/class-tfld-framework.php'; // Include files witout the autoloader
 }
 
