@@ -1,4 +1,4 @@
- * Table of Contents (number is code line):
+ * Table of Contents:
  * 
  * Include admin scripts
  * Include frontend scripts
