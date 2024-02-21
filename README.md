@@ -1,7 +1,7 @@
 # Child Theme Name: TFLD Framework
 
 ## Description
-This plugin is designed for testing and learning purposes, combining various tutorials and courses. It serves as a practical exercise for Object-Oriented Programming (OOP) in PHP.
+This child theme is designed for testing and learning purposes, combining various tutorials and courses. It serves as a practical exercise for Object-Oriented Programming (OOP) in PHP.
 
 ## Table of Contents
 - [Description](#description)
