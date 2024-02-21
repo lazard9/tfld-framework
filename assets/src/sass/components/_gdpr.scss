@@ -1,0 +1,43 @@
+.comment-form-consent {
+    position: relative;
+
+    & input {
+        position: absolute;
+        left: 0;
+        top: 2px;
+        opacity: 0;
+        width: 17px;
+        height: 17px;
+        cursor: pointer;
+
+        &:checked + label::before {
+            background-color: #a6d131;
+        }
+    }
+    
+    & label {
+        position: relative;
+        padding-left: 30px;
+
+        & a {
+            color: #a9a9a9;
+            text-decoration: underline;
+
+            &:hover {
+                color: #a6d131;
+            }
+        }
+
+        &::before {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            content: '';
+            width: 17px;
+            height: 17px;
+            border: 1px solid #a6d131;
+            background-color: transparent;
+            transition: ease 0.4s;
+        }
+    }
+}

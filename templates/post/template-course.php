@@ -8,7 +8,7 @@ $price = $wpdb->get_var("SELECT `price` FROM `$ourdb` WHERE `ID` = " . $post->ID
 $video = $wpdb->get_var("SELECT `video` FROM `$ourdb` WHERE `ID` = " . $post->ID . "");
 $curriculum = $wpdb->get_var("SELECT `content` FROM `$ourdb` WHERE `ID` = " . $post->ID . "");
 
-$all_ids = $wpdb->get_col("SELECT `ID` FROM `$ourdb`");
+// $all_ids = $wpdb->get_col("SELECT `ID` FROM `$ourdb`");
 
 get_header();
 
@@ -36,11 +36,11 @@ if (have_posts()) {
                     <div>' . $curriculum . '</div>
                 </div>';
 
-        foreach ($all_ids as $id) {
-            echo $id . '<br/>';
-            echo get_the_title($id) . '<br/>';
-            echo get_the_post_thumbnail_url($id) . '<br/>';
-        };
+        // foreach ($all_ids as $id) {
+        //     echo $id . '<br/>';
+        //     echo get_the_title($id) . '<br/>';
+        //     echo get_the_post_thumbnail_url($id) . '<br/>';
+        // };
 
         $votes = get_post_meta($post->ID, "votes", true);
         $votes = ($votes == "") ? 0 : $votes;
